@@ -1,18 +1,12 @@
-import express from 'express';
-import { 
-    createUser, 
-    getAllUsers, 
-    getUserById, 
-    updateUser, 
-    deleteUser 
-} from '../controllers/userController.js';
+import express from "express";
+import { register, login } from "../controllers/auth.js";
 
 const router = express.Router();
 
-router.post('/', createUser); // Thêm user mới
-router.get('/', getAllUsers); // Lấy danh sách user
-router.get('/:id', getUserById); // Lấy user theo ID
-router.put('/:id', updateUser); // Cập nhật user
-router.delete('/:id', deleteUser); // Xóa user
+// Đăng ký tài khoản
+router.post("/register", register);
+
+// Đăng nhập
+router.post("/login", login);
 
 export default router;

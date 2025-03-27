@@ -59,3 +59,37 @@ export const updateIncome = async (req, res) => {
         res.status(500).json({ message: "Lỗi khi cập nhật thu nhập", error });
     }
 };
+
+// Lấy tổng thu nhập trong tháng
+export const getTotalIncomeByMonth = async (req, res) => {
+    try {
+        const { year, month } = req.params;
+
+        // Chuyển đổi tháng và năm về dạng số nguyên
+        const startDate = new Date(year, month - 1, 1);
+        const endDate = new Date(year, month, 0, 23, 59, 59);
+
+        const totalIncome = await Income.aggregate([
+            {
+                $match: {
+                    date: { $gte: startDate, $lte: endDate }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalAmount: { $sum: "$amount" }
+                }
+            }
+        ]);
+
+        res.status(200).json({ 
+            month, 
+            year, 
+            totalIncome: totalIncome.length > 0 ? totalIncome[0].totalAmount : 0 
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Lỗi khi lấy tổng thu nhập trong tháng", error });
+    }
+};
+

@@ -51,9 +51,9 @@ import ExpenseModel from "../models/addexpenseModels.js"; // Đảm bảo đúng
 // 🟢 Tạo một khoản chi tiêu mới
 export const createExpense = async (req, res, next) => {
     try {
+        console.log("📥 Dữ liệu nhận từ Flutter:", req.body); // Kiểm tra dữ liệu
         const { merchant, amount, category, date, description } = req.body;
 
-        // Kiểm tra dữ liệu đầu vào
         if (!merchant || !amount || !category || !date) {
             return res.status(400).json({ message: "Thiếu thông tin bắt buộc!" });
         }
@@ -67,12 +67,14 @@ export const createExpense = async (req, res, next) => {
         });
 
         const savedExpense = await newExpense.save();
-        console.log(savedExpense)
+        console.log("✅ Chi tiêu đã lưu:", savedExpense);
         res.status(201).json(savedExpense);
     } catch (err) {
+        console.error("❌ Lỗi khi lưu chi tiêu:", err);
         next(err);
     }
 };
+
 
 // 🟢 Cập nhật khoản chi tiêu
 export const updateExpense = async (req, res, next) => {
