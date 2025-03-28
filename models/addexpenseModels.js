@@ -8,15 +8,11 @@ const ExpenseSchema = new mongoose.Schema({
     amount: {
         type: Number,
         required: false, // Số tiền chi tiêu
-        min: 0,  // Không cho phép giá trị âm
     },
-    category: {
-        type: String,
-        required: false, // Danh mục chi tiêu
-    },
+    categoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
     date: {
         type: Date,
-        required: false, // Ngày nhập chi tiêu
+        required: false,
         default: () => Date.now(), // Đảm bảo Date.now() trả về đúng giá trị thời gian hiện tại
     },
     description: {

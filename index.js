@@ -47,13 +47,13 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
+import geminiRoutes from './routes/gemini.js';
 import expenseRoutes from "./routes/addexpense.js";
 import incomeRoutes from "./routes/income.js";
 import authRoutes from "./routes/auth.js";
 import multer from "multer";
 // import uploadFile from "./routes/fileUpload";
-
+import categoryRoutes from './routes/category.js';
 dotenv.config();
 
 const app = express();
@@ -83,6 +83,8 @@ const connectMongoDB = async () => {
 app.use("/api/expense", expenseRoutes);
 app.use("/api/income", incomeRoutes);
 app.use("/api/auth", authRoutes);
+app.use('/api/gemini', geminiRoutes);
+app.use('/api/categories', categoryRoutes);
 // app.use("/api/upload", upload.single("file"), uploadFile);
 
 // Middleware xử lý lỗi

@@ -12,10 +12,6 @@ const CategorySchema = new mongoose.Schema({
     icon: {  
         type: String,  
         required: false, // Icon của danh mục
-    },
-    color: {
-        type: String,
-        required: true, // Màu danh mục (ví dụ: #FF5733)
     }
 }, { timestamps: true });
 
